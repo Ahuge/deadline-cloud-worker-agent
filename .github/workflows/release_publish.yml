@@ -23,9 +23,10 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}
           hatch -v build
+          REF="$(cut -d'+' -f1 <<<"${GITHUB_REF##*/}")"
 
-          echo "whl-path=${GITHUB_WORKSPACE}/dist/deadline_cloud_worker_agent-${GITHUB_REF##*/}-py3-none-any.whl" >> ${GITHUB_OUTPUT}
-          echo "tgz-path=${GITHUB_WORKSPACE}/dist/deadline_cloud_worker_agent-${GITHUB_REF##*/}.tar.gz" >> ${GITHUB_OUTPUT}
+          echo "whl-path=${GITHUB_WORKSPACE}/dist/deadline_cloud_worker_agent-${REF}-py3-none-any.whl" >> ${GITHUB_OUTPUT}
+          echo "tgz-path=${GITHUB_WORKSPACE}/dist/deadline_cloud_worker_agent-${REF}.tar.gz" >> ${GITHUB_OUTPUT}
       - name: Upload Release Asset
         id: upload-release-asset-windows
         uses: softprops/action-gh-release@v1
