@@ -890,23 +890,23 @@ class WorkerScheduler:
                 job_details = job_entities.job_details()
 
                 # For Windows the WA runs as Administrator so fail jobs that were configured to runAs - WORKER_AGENT_USER as that would provide Admin privileges to the job
-                if (
-                    os.name == "nt"
-                    and job_details.job_run_as_user
-                    and job_details.job_run_as_user.is_worker_agent_user
-                ):
-                    err_msg = "Job cannot run as WORKER_AGENT_USER. Worker Agent is running with Administrator privileges."
-                    self._fail_all_actions(session_spec, err_msg)
-                    logger.error(
-                        SessionLogEvent(
-                            subtype=SessionLogEventSubtype.FAILED,
-                            queue_id=queue_id,
-                            job_id=job_id,
-                            session_id=new_session_id,
-                            message=err_msg,
-                        )
-                    )
-                    continue
+                # if (
+                #     os.name == "nt"
+                #     and job_details.job_run_as_user
+                #     and job_details.job_run_as_user.is_worker_agent_user
+                # ):
+                #     err_msg = "Job cannot run as WORKER_AGENT_USER. Worker Agent is running with Administrator privileges."
+                #     self._fail_all_actions(session_spec, err_msg)
+                #     logger.error(
+                #         SessionLogEvent(
+                #             subtype=SessionLogEventSubtype.FAILED,
+                #             queue_id=queue_id,
+                #             job_id=job_id,
+                #             session_id=new_session_id,
+                #             message=err_msg,
+                #         )
+                #     )
+                #     continue
 
             except (ValueError, RuntimeError) as error:
                 # Can't even start a session right now if we don't
